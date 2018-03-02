@@ -1,1 +1,1 @@
-# python_selenium_training
+# Repository for python selenium training
