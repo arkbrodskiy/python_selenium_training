@@ -1,5 +1,4 @@
 
-
 class ContactHelper:
 
     def __init__(self, app):
@@ -38,11 +37,7 @@ class ContactHelper:
         # close alert
         wd.switch_to_alert().accept()
         # return to home page
-        self.go_to_home_page()
-
-    def go_to_home_page(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        self.app.go_to.home_page()
 
     def modify_first_contact(self, contact):
         wd = self.app.wd
