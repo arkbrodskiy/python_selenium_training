@@ -4,6 +4,7 @@ from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
 from fixture.session import SessionHelper
 from fixture.navigation import Go_to
+from fixture.utils import Utils
 
 
 class Application:
@@ -16,6 +17,7 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.go_to = Go_to(self)
+        self.utils = Utils(self)
 
     def open_home_page(self):
         wd = self.wd

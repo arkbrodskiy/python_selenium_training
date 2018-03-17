@@ -11,4 +11,5 @@ class Go_to:
 
     def home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if wd.current_url != 'http://localhost/addressbook/':
+            wd.find_element_by_link_text("home").click()
