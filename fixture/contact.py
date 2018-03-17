@@ -46,3 +46,6 @@ class ContactHelper:
         wd.find_element_by_name('update').click()
         self.return_to_home_page()
 
+    def count(self):
+        self.app.go_to.home_page()
+        self.app.utils.count()

@@ -39,3 +39,7 @@ class GroupHelper:
         self.app.utils.change_field_value("group_name", group.name)
         self.app.utils.change_field_value("group_header", group.header)
         self.app.utils.change_field_value("group_footer", group.footer)
+
+    def count(self):
+        self.app.go_to.groups_page()
+        return self.app.utils.count()
