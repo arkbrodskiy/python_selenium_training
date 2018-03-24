@@ -28,9 +28,12 @@ class ContactHelper:
         self.app.utils.change_field_value("lastname", contact.last_name)
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.go_to.home_page()
-        self.app.utils.select_first()
+        self.app.utils.select_by_index(index)
         # submit deletion
         wd.find_element_by_css_selector("[value='Delete']").click()
         # close alert
@@ -40,11 +43,14 @@ class ContactHelper:
         self.contact_cache = None
 
     def modify_first_contact(self, contact):
+        self.modify_contact_by_index(0, contact)
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.app.go_to.home_page()
-        self.app.utils.select_first()
+        self.app.utils.select_by_index(index)
         # init edit contact
-        wd.find_element_by_css_selector("[title='Edit']").click()
+        wd.find_elements_by_css_selector("[title='Edit']")[index].click()
         self.fill_form(contact)
         # submit edit
         wd.find_element_by_name('update').click()
