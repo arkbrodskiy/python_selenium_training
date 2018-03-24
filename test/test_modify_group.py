@@ -13,5 +13,5 @@ def test_modify_first_group(app):
     new_groups = app.group.get_group_list()
     assert len(old_groups) == len(new_groups)
     old_groups[0] = group
-    assert sorted(old_groups, key=app.group.id_or_max) == sorted(new_groups, key=app.group.id_or_max)
+    assert sorted(old_groups, key=app.utils.id_or_max) == sorted(new_groups, key=app.utils.id_or_max)
 

@@ -1,3 +1,5 @@
+from sys import maxsize
+
 
 class Utils:
 
@@ -18,3 +20,9 @@ class Utils:
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name('selected[]'))
+
+    def id_or_max(self, model_object):
+        if model_object.id:
+            return int(model_object.id)
+        else:
+            return maxsize
