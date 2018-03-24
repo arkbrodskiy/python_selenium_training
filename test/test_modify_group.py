@@ -10,8 +10,8 @@ def test_modify_first_group(app):
     if group.name is None:
         group.name = old_groups[0].name
     app.group.modify_first_group(group)
+    assert len(old_groups) == app.utils.count()
     new_groups = app.group.get_group_list()
-    assert len(old_groups) == len(new_groups)
     old_groups[0] = group
     assert sorted(old_groups, key=app.utils.id_or_max) == sorted(new_groups, key=app.utils.id_or_max)
 
