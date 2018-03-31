@@ -4,8 +4,7 @@ from model.contact import Contact
 
 
 def test_modify_some_contact(app):
-    if app.group.count() == 0:
-        app.contact.create(Contact(first_name='Created_first_name', last_name='Just_created_last_name'))
+    app.contact.ensure_contact_exists(app)
     old_contacts = app.contact.get_contact_list()
     contact = Contact(first_name="Edited_first_name", last_name="Edited_last_name")
     index = randrange(len(old_contacts))
