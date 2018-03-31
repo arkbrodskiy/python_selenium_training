@@ -4,7 +4,7 @@ from model.contact import Contact
 
 
 def test_modify_some_contact(app):
-    app.contact.ensure_contact_exists(app)
+    app.contact.ensure_contact_exists()
     old_contacts = app.contact.get_contact_list()
     contact = Contact(first_name="Edited_first_name", last_name="Edited_last_name")
     index = randrange(len(old_contacts))
