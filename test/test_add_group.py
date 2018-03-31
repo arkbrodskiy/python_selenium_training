@@ -1,6 +1,5 @@
 import random
 import string
-
 from model.group import Group
 import pytest
 
