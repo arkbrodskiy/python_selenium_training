@@ -1,4 +1,4 @@
-import json
+import jsonpickle
 import getopt
 import sys
 import os
@@ -47,7 +47,8 @@ def get_random_string_upper(len):
 
 
 def get_random_string_digits(min_len, max_len):
-    return "".join([random.choice(string.digits) for i in range(random.randrange(min_len, max_len))])
+    result = "".join([random.choice(string.digits) for i in range(random.randrange(min_len, max_len))])
+    return result.replace('  ', ' ')
 
 
 test_data = [Contact(first_name="", last_name="", address="", home_phone="", work_phone="",
@@ -60,4 +61,5 @@ test_data = [Contact(first_name="", last_name="", address="", home_phone="", wor
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', f)
 with open(file, 'w') as out:
-    out.write(json.dumps(test_data, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options('json', indent=2)
+    out.write(jsonpickle.encode(test_data))
