@@ -1,9 +1,7 @@
-import pytest
-from data.groups import test_data
 
 
-@pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])
-def test_add_group(app, group):
+def test_add_group(app, data_groups):
+    group = data_groups
     old_groups = app.group.get_group_list()
     app.group.create(group)
     assert len(old_groups) + 1 == app.utils.count()

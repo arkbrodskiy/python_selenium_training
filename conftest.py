@@ -2,6 +2,7 @@ import json
 import pytest
 from fixture.application import Application
 import os.path
+import importlib
 
 fixture = None
 target = None
@@ -33,3 +34,14 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--target', action='store', default='target.json')
+
+
+def load_from_module(module):
+    return importlib.import_module('data.%s' % module).test_data
+
+
+def pytest_generate_tests(metafunc):
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith('data_'):
+            test_data = load_from_module(fixture[5:])
+            metafunc.parametrize(fixture, test_data, ids=[str(x) for x in test_data])
