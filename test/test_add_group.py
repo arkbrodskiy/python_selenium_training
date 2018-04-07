@@ -1,5 +1,5 @@
 import pytest
-from data.add_group import test_data
+from data.groups import test_data
 
 
 @pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])

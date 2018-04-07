@@ -1,4 +1,4 @@
-from data.add_contact import test_data
+from data.contacts import test_data
 import pytest
 
 
