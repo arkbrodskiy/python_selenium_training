@@ -77,6 +77,9 @@ class GroupHelper:
         self.app.go_to.groups_page()
         return self.app.utils.count()
 
+    def create_one_group(self):
+        self.create(Group(name='Created_group_name', header='Just_created_header', footer='Fresh_footer'))
+
     group_cache = None
 
     def get_group_list(self):

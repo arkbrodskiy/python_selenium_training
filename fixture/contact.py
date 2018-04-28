@@ -36,8 +36,7 @@ class ContactHelper:
         self.app.utils.change_field_value("email2", contact.email2)
         self.app.utils.change_field_value("email3", contact.email3)
 
-    def ensure_contact_exists(self, db):
-        if len(db.get_contact_list()) == 0:
+    def create_one_contact(self):
             self.create(Contact(first_name='Created_first_name', last_name='Just_created_last_name',
                                 home_phone='5369521475', work_phone='3623652012', mobile_phone='7878756321',
                                 secondary_phone='3233653210', email='fgh@ljhg.hg', email2='cvbn@kjgh.rt6',
