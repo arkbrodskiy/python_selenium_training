@@ -1,10 +1,9 @@
 import random
-from random import randrange
 
 from model.group import Group
 
 
-def test_modify_some_group(app, db):
+def test_modify_some_group(app, db, check_ui):
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name='Created_group_name', header='Just_created_header', footer='Fresh_footer'))
     old_groups = db.get_group_list()
@@ -18,4 +17,7 @@ def test_modify_some_group(app, db):
     old_groups.remove(group_to_modify)
     old_groups.append(new_group)
     assert sorted(old_groups, key=app.utils.id_or_max) == sorted(new_groups, key=app.utils.id_or_max)
+    if check_ui:
+        print('UI verification activated')
+        assert sorted(new_groups, key=app.utils.id_or_max) == sorted(app.group.get_group_list(), key=app.utils.id_or_max)
 
