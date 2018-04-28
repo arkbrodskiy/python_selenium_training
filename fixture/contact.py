@@ -36,8 +36,8 @@ class ContactHelper:
         self.app.utils.change_field_value("email2", contact.email2)
         self.app.utils.change_field_value("email3", contact.email3)
 
-    def ensure_contact_exists(self):
-        if self.count() == 0:
+    def ensure_contact_exists(self, db):
+        if len(db.get_contact_list()) == 0:
             self.create(Contact(first_name='Created_first_name', last_name='Just_created_last_name',
                                 home_phone='5369521475', work_phone='3623652012', mobile_phone='7878756321',
                                 secondary_phone='3233653210', email='fgh@ljhg.hg', email2='cvbn@kjgh.rt6',
@@ -58,6 +58,18 @@ class ContactHelper:
         self.app.go_to.home_page()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.go_to.home_page()
+        self.app.utils.select_by_id(id)
+        # submit deletion
+        wd.find_element_by_css_selector("[value='Delete']").click()
+        # close alert
+        wd.switch_to_alert().accept()
+        # return to home page
+        self.app.go_to.home_page()
+        self.contact_cache = None
+
     def modify_first_contact(self, contact):
         self.modify_contact_by_index(0, contact)
 
@@ -67,6 +79,19 @@ class ContactHelper:
         self.app.utils.select_by_index(index)
         # init edit contact
         wd.find_elements_by_css_selector("[title='Edit']")[index].click()
+        self.fill_form(contact)
+        # submit edit
+        wd.find_element_by_name('update').click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def modify_contact_by_id(self, contact):
+        wd = self.app.wd
+        self.app.go_to.home_page()
+        #self.app.utils.select_by_id(contact.id)
+        # init edit contact
+        self._click_edit(contact.id)
+        #wd.find_elements_by_css_selector("[title='Edit']")[index].click()
         self.fill_form(contact)
         # submit edit
         wd.find_element_by_name('update').click()
@@ -160,3 +185,11 @@ class ContactHelper:
         return "\n".join(filter(lambda x: x != "",
                                 filter(lambda x: x is not None,
                                        [contact.email, contact.email2, contact.email3])))
+
+    def _click_edit(self, id):
+        wd = self.app.wd
+        for line in wd.find_elements_by_css_selector("[name='entry']"):
+            if len(line.find_elements_by_css_selector("input[value='%s']" % id)) == 1:
+                line.find_element_by_css_selector("[title='Edit']").click()
+                break
+
