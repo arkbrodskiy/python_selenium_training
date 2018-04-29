@@ -35,7 +35,7 @@ class ORMFixture:
         mobile_phone = Optional(str, column='mobile')
         work_phone = Optional(str, column='work')
         secondary_phone = Optional(str, column='phone2')
-        deprecated = Optional(datetime, column='deprecated')
+        deprecated = Optional(str, column='deprecated')
         groups = Set(lambda: ORMFixture.ORMGroup,
                      table='address_in_groups', column='group_id', reverse='contacts', lazy=True)
 
@@ -78,5 +78,5 @@ class ORMFixture:
     @db_session
     def get_contacts_not_in_groups(self, group):
         orm_group = self.get_orm_group(group)
-        select_result = select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups)
-        return self.convert_contacts_to_model(select_result)
+        return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact
+                                                     if c.deprecated is None and orm_group not in c.groups))

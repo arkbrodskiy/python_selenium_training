@@ -195,8 +195,21 @@ class ContactHelper:
 
     def add_to_group(self, contact_id, group_id):
         wd = self.app.wd
+        self.app.go_to.home_page()
         self.app.utils.select_by_id(contact_id)
-        select = Select(wd.find_element_by_name('to_group'))
-        select.select_by_value(group_id)
+        self.select_from_dropdown_by_value(wd, 'to_group', group_id)
         wd.find_element_by_name('add').click()
-        self.return_to_home_page()
+        self.app.go_to.home_page()
+
+    def select_from_dropdown_by_value(self, wd, menu_name, value):
+        select = Select(wd.find_element_by_name(menu_name))
+        select.select_by_value(value)
+
+    def remove_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.go_to.home_page()
+        self.select_from_dropdown_by_value(wd, 'group', group_id)
+        self.app.utils.select_by_id(contact_id)
+        wd.find_element_by_name('remove').click()
+        self.app.go_to.home_page()
+        self.select_from_dropdown_by_value(wd, 'group', "")
