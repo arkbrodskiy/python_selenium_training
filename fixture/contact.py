@@ -1,5 +1,6 @@
 from model.contact import Contact
 import re
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper:
@@ -192,3 +193,10 @@ class ContactHelper:
                 line.find_element_by_css_selector("[title='Edit']").click()
                 break
 
+    def add_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.utils.select_by_id(contact_id)
+        select = Select(wd.find_element_by_name('to_group'))
+        select.select_by_value(group_id)
+        wd.find_element_by_name('add').click()
+        self.return_to_home_page()
